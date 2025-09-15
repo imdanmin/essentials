@@ -1,16 +1,16 @@
 import os
 import sys
 import tempfile
+from moviepy import AudioFileClip, ImageClip
 import moviepy
-from moviepy import VideoFileClip, AudioFileClip
 from PIL import Image
 
 # Function to validate file existence and extension
-def validate_file(file_path, expected_ext):
+def validate_file(file_path, expected_exts):
     if not os.path.isfile(file_path):
         raise FileNotFoundError(f"File not found: {file_path}")
-    if not file_path.lower().endswith(expected_ext):
-        raise ValueError(f"File must have {expected_ext} extension: {file_path}")
+    if not any(file_path.lower().endswith(ext) for ext in expected_exts):
+        raise ValueError(f"File must have one of {expected_exts} extensions: {file_path}")
 
 # Function to create a minimal solid black JPG
 def create_black_image(output_path, width=640, height=360):
@@ -21,17 +21,18 @@ def create_black_image(output_path, width=640, height=360):
 
 # Check if correct number of arguments is provided
 if len(sys.argv) != 2:
-    print("Usage: python convert_m4a_to_mp4.py <input_m4a>")
+    print("Usage: python convert_audio_to_mp4.py <input_audio> (supports .m4a or .mp4)")
     sys.exit(1)
 
 # Get command-line argument
-audio_path = sys.argv[1]
+input_path = sys.argv[1]
 
 # Validate input
-validate_file(audio_path, '.m4a')
+validate_file(input_path, ('.m4a', '.mp4'))
 
-# Generate output path automatically from audio_path
-output_path = os.path.splitext(audio_path)[0] + '_mp4.mp4'
+# Generate output path automatically from input_path
+base, ext = os.path.splitext(input_path)
+output_path = base + ('_video' if ext.lower() == '.mp4' else '') + '.mp4'
 
 # Create a temporary black JPG image
 with tempfile.NamedTemporaryFile(suffix='.jpg', delete=False) as temp_image:
@@ -39,10 +40,10 @@ with tempfile.NamedTemporaryFile(suffix='.jpg', delete=False) as temp_image:
 
 try:
     # Load the audio
-    audio = AudioFileClip(audio_path)
+    audio = AudioFileClip(input_path)
 
     # Create a video clip from the black image, set to the audio's duration
-    video = moviepy.video.VideoClip.ImageClip(image_path).with_duration(audio.duration)
+    video = ImageClip(image_path).with_duration(audio.duration)
 
     # Set the audio to the video clip
     video = video.with_audio(audio)
