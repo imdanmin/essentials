@@ -1,0 +1,58 @@
+#!/bin/bash
+
+# Define color codes
+RED='\e[31m'
+GREEN='\e[32m'
+RESET='\e[0m'
+
+# Check the status of warp-svc.service
+SERVICE_STATUS=$(systemctl is-active warp-svc.service | tr '[:lower:]' '[:upper:]')
+
+if [ "$SERVICE_STATUS" = "ACTIVE" ] ; then
+    # Prompt to disable and stop the service
+    echo -e "warp-svc.service is currently ${GREEN}[$SERVICE_STATUS]${RESET}."
+    echo
+    read -p "Would you like to stop it? (y/N): " response
+    echo
+    response=${response,,} # Convert to lowercase
+    if [ "$response" = "y" ] || [ "$response" = "yes" ]; then
+        echo -e "${GREEN}Stopping warp-svc.service...${RESET}"
+        sudo systemctl stop warp-svc.service
+        if [ $? -eq 0 ]; then
+
+            echo
+            systemctl --no-pager status warp-svc.service | grep -E ".*Deactivated.*" -C50 --color=always | bat --file-name "warp-svc" --style=numbers,header,grid
+            echo
+            echo -e "${GREEN}warp-svc.service has been stopped.${RESET}"
+
+        else
+            echo -e "${RED}Failed to stop warp-svc.service. Please check your permissions or service status.${RESET}"
+        fi
+    else
+        echo -e "No changes made. warp-svc.service remains ${GREEN}[$SERVICE_STATUS]${RESET}."
+    fi
+else
+    # Prompt to enable and start the service
+    echo -e "warp-svc.service is currently ${RED}[$SERVICE_STATUS]${RESET}."
+    echo
+    read -p "Would you like to start it? (y/N): " response
+    echo
+    response=${response,,} # Convert to lowercase
+    if [ "$response" = "y" ] || [ "$response" = "yes" ]; then
+        echo -e "${GREEN}Starting warp-svc.service...${RESET}"
+        sudo systemctl start warp-svc.service
+        if [ $? -eq 0 ]; then
+
+            echo
+            sleep 0.5
+            curl -s https://www.cloudflare.com/cdn-cgi/trace/ | grep -E ".*warp.*" -C50 --color=always | bat --file-name "cloudflare.com/cdn-cgi/trace" --style=numbers,header,grid
+            echo
+            echo -e "${GREEN}warp-svc.service has been started.${RESET}"
+
+        else
+            echo -e "${RED}Failed to start warp-svc.service. Please check your permissions or service status.${RESET}"
+        fi
+    else
+        echo -e "No changes made. warp-svc.service remains ${RED}[$SERVICE_STATUS]${RESET}."
+    fi
+fi
