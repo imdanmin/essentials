@@ -3,7 +3,11 @@
 # Define color codes
 RED='\e[31m'
 GREEN='\e[32m'
+MAGENTA='\033[35m'
 RESET='\e[0m'
+
+systemctl --user disable warp-taskbar.service
+systemctl --user stop warp-taskbar.service
 
 # Check the status of warp-svc.service
 SERVICE_STATUS=$(systemctl is-active warp-svc.service | tr '[:lower:]' '[:upper:]')
@@ -12,14 +16,24 @@ if [ "$SERVICE_STATUS" = "ACTIVE" ] ; then
     # Prompt to disable and stop the service
     echo -e "warp-svc.service is currently ${GREEN}[$SERVICE_STATUS]${RESET}."
     echo
-    read -p "Would you like to stop it? (y/N): " response
+    echo -en "${MAGENTA}Would you like to stop it? (y/N):${RESET}"
+    read -p " " response
     echo
+
     response=${response,,} # Convert to lowercase
     if [ "$response" = "y" ] || [ "$response" = "yes" ]; then
-        echo -e "${GREEN}Stopping warp-svc.service...${RESET}"
+        echo -e "${MAGENTA}Disconnecting from warp-cli...${RESET}"
+
+        echo -en "${GREEN}"
+        warp-cli disconnect
+        echo -en "${RESET}"
+
+        echo
+        echo -e "${MAGENTA}Stopping warp-svc.service...${RESET}"
         sudo systemctl stop warp-svc.service
         if [ $? -eq 0 ]; then
 
+            echo -e "${GREEN}Success${RESET}"
             echo
             systemctl --no-pager status warp-svc.service | grep -E ".*Deactivated.*" -C50 --color=always | bat --file-name "warp-svc" --style=numbers,header,grid
             echo
@@ -35,24 +49,59 @@ else
     # Prompt to enable and start the service
     echo -e "warp-svc.service is currently ${RED}[$SERVICE_STATUS]${RESET}."
     echo
-    read -p "Would you like to start it? (y/N): " response
+    echo -en "${MAGENTA}Would you like to start it? (y/N):${RESET}"
+    read -p " " response
     echo
     response=${response,,} # Convert to lowercase
     if [ "$response" = "y" ] || [ "$response" = "yes" ]; then
-        echo -e "${GREEN}Starting warp-svc.service...${RESET}"
+
+        echo -e "${MAGENTA}Starting warp-svc.service...${RESET}"
+        sudo systemctl stop warp-svc.service
         sudo systemctl start warp-svc.service
-        if [ $? -eq 0 ]; then
 
-            echo
-            sleep 0.5
-            curl -s https://www.cloudflare.com/cdn-cgi/trace/ | grep -E ".*warp.*" -C50 --color=always | bat --file-name "cloudflare.com/cdn-cgi/trace" --style=numbers,header,grid
-            echo
-            echo -e "${GREEN}warp-svc.service has been started.${RESET}"
+        while true; do
+            if systemctl is-active --quiet warp-svc.service; then
+                break
+            fi
 
-        else
-            echo -e "${RED}Failed to start warp-svc.service. Please check your permissions or service status.${RESET}"
+            sleep 1
+        done
+
+        echo
+        sleep 0.5
+
+        curl -s https://www.cloudflare.com/cdn-cgi/trace/ | grep -E ".*warp.*" -C50 --color=always | bat --file-name "cloudflare.com/cdn-cgi/trace" --style=numbers,header,grid
+
+        echo
+        echo -e "${GREEN}warp-svc.service has been started.${RESET}"
+        echo
+
+        echo -en "${MAGENTA}Enable Cloudflare Warp? (y/N):${RESET}"
+        read -p " " response
+        echo
+
+        COUNTER=0
+        COUNT_TO=4
+        while [ ${COUNTER} -lt ${COUNT_TO} ]; do
+            echo -n "🦆 "
+            sleep 1
+            COUNTER=$((COUNTER + 1))
+        done
+
+        echo "🪿"
+        echo
+
+        response=${response,,} # Convert to lowercase
+        if [ "$response" = "y" ] || [ "$response" = "yes" ]; then
+            warp-cli connect > /dev/null
         fi
+
+        echo -en "${GREEN}"
+        warp-cli status
+        echo -en "${RESET}"
+
     else
         echo -e "No changes made. warp-svc.service remains ${RED}[$SERVICE_STATUS]${RESET}."
+
     fi
 fi
