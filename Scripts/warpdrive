@@ -96,6 +96,10 @@ else
             warp-cli connect > /dev/null
         fi
 
+        sleep 1
+        curl -s https://www.cloudflare.com/cdn-cgi/trace/ | grep -E ".*warp.*" -C50 --color=always | bat --file-name "cloudflare.com/cdn-cgi/trace" --style=numbers,header,grid
+        sleep 0.5
+
         echo -en "${GREEN}"
         warp-cli status
         echo -en "${RESET}"
