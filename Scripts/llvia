@@ -1,0 +1,11 @@
+#!/bin/bash
+
+RAIN="$HOME/Media/Sound/rain.mp3"
+
+mpv --loop --volume=50 --quiet --really-quiet --no-video --no-terminal ${RAIN} >/dev/null 2>&1 &
+
+MPV_PID=$!
+
+terminal-rain
+
+kill $MPV_PID 2>/dev/null
