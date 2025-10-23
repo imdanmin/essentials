@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -e
+
+NDIR="$HOME/Notes"
+
+ROFI_PROMPT="Select a file:"
+FILE_LIST=$(find "$NDIR" -maxdepth 1 -type f -name ".*" -prune -o -printf "%P\n")
+FIL=$(echo -e "$FILE_LIST" | rofi -dmenu -p "$ROFI_PROMPT" -i)
+
+if [ -n "$FIL" ]; then
+    cat "$NDIR/$FIL" | xsel -ib
+    echo "🫡 Copied to clipboard."
+else
+    echo "😿 No file was selected."
+fi

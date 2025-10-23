@@ -13,6 +13,8 @@ systemctl --user stop warp-taskbar.service
 SERVICE_STATUS=$(systemctl is-active warp-svc.service | tr '[:lower:]' '[:upper:]')
 
 if [ "$SERVICE_STATUS" = "ACTIVE" ] ; then
+    curl -s https://www.cloudflare.com/cdn-cgi/trace/ | grep -E ".*warp.*" -C50 --color=always | bat --file-name "cloudflare.com/cdn-cgi/trace" --style=numbers,header,grid
+
     # Prompt to disable and stop the service
     echo -e "warp-svc.service is currently ${GREEN}[$SERVICE_STATUS]${RESET}."
     echo
@@ -80,25 +82,26 @@ else
         read -p " " response
         echo
 
-        COUNTER=0
-        COUNT_TO=4
-        while [ ${COUNTER} -lt ${COUNT_TO} ]; do
-            echo -n "🦆 "
-            sleep 1
-            COUNTER=$((COUNTER + 1))
-        done
-
-        echo "🪿"
-        echo
-
         response=${response,,} # Convert to lowercase
         if [ "$response" = "y" ] || [ "$response" = "yes" ]; then
-            warp-cli connect > /dev/null
-        fi
+            COUNTER=0
+            COUNT_TO=4
+            while [ ${COUNTER} -lt ${COUNT_TO} ]; do
+                echo -n "🦆 "
+                sleep 1
+                COUNTER=$((COUNTER + 1))
+            done
 
-        sleep 1
-        curl -s https://www.cloudflare.com/cdn-cgi/trace/ | grep -E ".*warp.*" -C50 --color=always | bat --file-name "cloudflare.com/cdn-cgi/trace" --style=numbers,header,grid
-        sleep 0.5
+            echo "🪿"
+            echo
+
+            warp-cli connect > /dev/null
+
+            sleep 1
+
+            curl -s https://www.cloudflare.com/cdn-cgi/trace/ | grep -E ".*warp.*" -C50 --color=always | bat --file-name "cloudflare.com/cdn-cgi/trace" --style=numbers,header,grid
+            sleep 0.5
+        fi
 
         echo -en "${GREEN}"
         warp-cli status

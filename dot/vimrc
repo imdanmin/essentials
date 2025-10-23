@@ -1,0 +1,71 @@
+set number
+set relativenumber
+set ignorecase infercase
+set smartcase
+set nocompatible
+set encoding=utf-8
+set nrformats=
+set showcmd
+set wrap
+set redrawtime=10000
+set lazyredraw
+set nolist
+set wildmenu
+set wildmode=longest:full,full
+set history=200
+set ttimeoutlen=50
+set splitbelow splitright
+set <M-j>=j
+set <M-k>=k
+set <M-h>=h
+set <M-l>=l
+set hidden
+set noswapfile
+set nobackup
+set undodir=~/.vim/undodir
+set undofile
+set viminfo+=n~/.vim/viminfo
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set expandtab
+set autoindent
+set incsearch
+set hlsearch
+
+let mapleader = " "
+inoremap jk <ESC>
+cnoremap jk <C-C>
+cnoremap <C-k> <Up>
+cnoremap <C-j> <Down>
+syntax on
+filetype plugin on
+filetype indent on
+nnoremap <leader>w <C-w>
+nnoremap <silent> <leader><leader> :<C-u>nohl<CR><C-l>
+autocmd FileType * setlocal formatoptions-=c formatoptions-=o
+autocmd BufWritePre * %s/\s\+$//e
+nnoremap <CR> za
+nnoremap Y y$
+nnoremap <M-h> <<
+nnoremap <M-l> >>
+inoremap <M-h> <C-d>
+inoremap <M-l> <C-t>
+vnoremap < <gv
+vnoremap > >gv
+vnoremap <M-h> <gv
+vnoremap <M-l> >gv
+inoremap . .<C-g>u
+inoremap , ,<C-g>u
+inoremap ! !<C-g>u
+inoremap ? ?<C-g>u
+nnoremap <M-j> :<C-u>m .+1<CR>==
+nnoremap <M-k> :<C-u>m .-2<CR>==
+inoremap <M-j> <ESC>:<C-u>m .+1<CR>==gi
+inoremap <M-k> <ESC>:<C-u>m .-2<CR>==gi
+vnoremap <M-j> :<C-u>m '>+1<CR>gv=gv
+vnoremap <M-k> :<C-u>m '<-2<CR>gv=gv
+nmap <silent> <leader>tl :<C-u>set invnumber<CR>:<C-u>set invrelativenumber<CR>
+nnoremap <silent> <leader>ts :<C-u>set invspell spelllang=en_us<CR>
+map <silent> <leader>dd :<C-u>Explore<CR>
+imap <C-H> <C-W>

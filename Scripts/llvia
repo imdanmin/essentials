@@ -1,8 +1,9 @@
 #!/bin/bash
 
 RAIN="$HOME/Media/Sound/rain.mp3"
+VOLUME=60
 
-mpv --loop --volume=50 --quiet --really-quiet --no-video --no-terminal ${RAIN} >/dev/null 2>&1 &
+mpv --loop --quiet --really-quiet --volume=${VOLUME} ${RAIN} &
 
 MPV_PID=$!
 
