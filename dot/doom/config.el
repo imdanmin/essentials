@@ -23,7 +23,7 @@
 ;;
 ;;(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
 ;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
-(setq doom-font (font-spec :family "Iosevka Nerd Font" :size 26))
+(setq doom-font (font-spec :family "Iosevka Nerd Font" :size 18))
 
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
@@ -91,6 +91,75 @@
 ;; shell
 (setq shell-file-name (executable-find "bash"))
 
+;; Word Wrapping
+(+global-word-wrap-mode +1)
+
 ;; Auto-Saving
 (auto-save-visited-mode +1)
 (setq auto-save-visited-interval 5)
+
+
+;; Asclepius ASCII Art
+(defun asclepius ()
+(let* ((banner '(
+"                  ⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣠⣤⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+"                  ⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣈⣉⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+"                  ⠀⠀⠀⠀⠀⢀⣶⣿⣿⣿⣿⣿⡷⢦⣤⣀⠀⠀⠀⠀⠀⠀⠀"
+"                  ⠀⠀⠀⠀⠀⢸⣿⣿⡏⠈⠙⠛⠿⠿⡿⠿⠃⢀⣀⣀⣀⣤⠀"
+"                  ⠀⠀⠀⠀⠀⠀⠙⠿⣿⠀⣿⣷⠀⡀⠀⠀⠀⠉⠉⠻⣏⠉⠀"
+"                  ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠛⢋⣠⣿⣦⠀⠀⠀⠀⠀⠉⠀⠀"
+"                  ⠀⠀⠀⠀⠀⠀⠀⢀⣴⣶⣿⣿⣿⣿⠏⠀⠀⠀⠀⠀⠀⠀⠀"
+"                  ⠀⠀⠀⠀⠀⠀⠀⢸⣿⠿⠛⠋⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+"                  ⠀⠀⠀⠀⠀⠀⠀⠀⠙⠀⣶⣿⠀⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+"                  ⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣥⣤⣾⡿⠃⠀⠀⠀⠀⠀⠀⠀⠀"
+"                  ⠀⠀⠀⠀⠀⠀⠀⠀⣾⡿⠿⠛⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+"                  ⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⢰⡆⢀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+"                  ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⢁⣸⡿⠂⠀⠀⠀⠀⠀⠀⠀⠀"
+"                  ⠀⠀⠀⠀⠀⠀⠀⠀⣴⠞⠛⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+"                  ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+""
+" ️️⚕️️⚕️⚕️️⚕️⚕️⚕️⚕️️⚕️️⚕️️⚕️⚕️⚕️⚕️️️⚕️⚕️⚕️⚕️️⚕️️⚕️️⚕️⚕️⚕️⚕️️⚕️️ "
+                   ))
+         (longest-line (apply #'max (mapcar #'length banner))))
+    (put-text-property
+     (point)
+     (dolist (line banner (point))
+       (insert (+doom-dashboard--center
+                +doom-dashboard--width
+                (concat line (make-string (max 0 (- longest-line (length line))) 32)))
+               "\n"))
+     'face 'doom-dashboard-banner)))
+
+;; DOOM Dashboard Customization
+
+;; Dashboard ASCII Art
+(setq +doom-dashboard-ascii-banner-fn #'asclepius)
+
+;; Remove "Loaded" and "Footer"
+(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-loaded)
+(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-footer)
+
+;; Menu Items
+
+;; Remove everything but org-agenda
+(setq +doom-dashboard-menu-sections
+        (cl-remove-if (lambda (section)
+                (member (car section)
+                        '("Recently opened files"
+                                "Reload last session"
+                                "Open project"
+                                "Jump to bookmark"
+                                "Open private configuration")))
+                                +doom-dashboard-menu-sections))
+
+;; Open org-daily
+(add-to-list '+doom-dashboard-menu-sections
+             '("Open Today's org-roam"
+               :icon (nerd-icons-octicon "nf-oct-sun" :face 'doom-dashboard-menu-title)
+               :when (featurep! :lang org +roam)
+               :face (:inherit (doom-dashboard-menu-title normal))
+               :action org-roam-dailies-goto-today))
+
+;; Footer
+(add-hook! '+doom-dashboard-functions :append
+  (insert "\n" (+doom-dashboard--center +doom-dashboard--width "Push Ups. Study Hard. Don't Stop.")))
