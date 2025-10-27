@@ -23,7 +23,7 @@
 ;;
 ;;(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
 ;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
-(setq doom-font (font-spec :family "Iosevka Nerd Font" :size 18))
+(setq doom-font (font-spec :family "Iosevka Nerd Font" :size 16))
 
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
@@ -84,9 +84,14 @@
 )
 
 ;; Open org-agenda file
+(defun +my/open-org-agenda-file ()
+  "Open org-agenda file"
+  (interactive)
+  (find-file "/home/dan/Documents/org/agenda.org"))
+
 (map! :leader
-      :desc "Open first agenda file"
-      "o a f" (lambda () (interactive) (find-file (car org-agenda-files))))
+      :desc "Open org-agenda file"
+      "o a f" #'+my/open-org-agenda-file)
 
 ;; shell
 (setq shell-file-name (executable-find "bash"))
@@ -102,23 +107,23 @@
 ;; Asclepius ASCII Art
 (defun asclepius ()
 (let* ((banner '(
-"                  ⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣠⣤⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
-"                  ⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣈⣉⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
-"                  ⠀⠀⠀⠀⠀⢀⣶⣿⣿⣿⣿⣿⡷⢦⣤⣀⠀⠀⠀⠀⠀⠀⠀"
-"                  ⠀⠀⠀⠀⠀⢸⣿⣿⡏⠈⠙⠛⠿⠿⡿⠿⠃⢀⣀⣀⣀⣤⠀"
-"                  ⠀⠀⠀⠀⠀⠀⠙⠿⣿⠀⣿⣷⠀⡀⠀⠀⠀⠉⠉⠻⣏⠉⠀"
-"                  ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠛⢋⣠⣿⣦⠀⠀⠀⠀⠀⠉⠀⠀"
-"                  ⠀⠀⠀⠀⠀⠀⠀⢀⣴⣶⣿⣿⣿⣿⠏⠀⠀⠀⠀⠀⠀⠀⠀"
-"                  ⠀⠀⠀⠀⠀⠀⠀⢸⣿⠿⠛⠋⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
-"                  ⠀⠀⠀⠀⠀⠀⠀⠀⠙⠀⣶⣿⠀⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀"
-"                  ⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣥⣤⣾⡿⠃⠀⠀⠀⠀⠀⠀⠀⠀"
-"                  ⠀⠀⠀⠀⠀⠀⠀⠀⣾⡿⠿⠛⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
-"                  ⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⢰⡆⢀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
-"                  ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⢁⣸⡿⠂⠀⠀⠀⠀⠀⠀⠀⠀"
-"                  ⠀⠀⠀⠀⠀⠀⠀⠀⣴⠞⠛⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
-"                  ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+"                ⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣠⣤⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+"                ⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣈⣉⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+"                ⠀⠀⠀⠀⠀⢀⣶⣿⣿⣿⣿⣿⡷⢦⣤⣀⠀⠀⠀⠀⠀⠀⠀"
+"                ⠀⠀⠀⠀⠀⢸⣿⣿⡏⠈⠙⠛⠿⠿⡿⠿⠃⢀⣀⣀⣀⣤⠀"
+"                ⠀⠀⠀⠀⠀⠀⠙⠿⣿⠀⣿⣷⠀⡀⠀⠀⠀⠉⠉⠻⣏⠉⠀"
+"                ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠛⢋⣠⣿⣦⠀⠀⠀⠀⠀⠉⠀⠀"
+"                ⠀⠀⠀⠀⠀⠀⠀⢀⣴⣶⣿⣿⣿⣿⠏⠀⠀⠀⠀⠀⠀⠀⠀"
+"                ⠀⠀⠀⠀⠀⠀⠀⢸⣿⠿⠛⠋⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+"                ⠀⠀⠀⠀⠀⠀⠀⠀⠙⠀⣶⣿⠀⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+"                ⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣥⣤⣾⡿⠃⠀⠀⠀⠀⠀⠀⠀⠀"
+"                ⠀⠀⠀⠀⠀⠀⠀⠀⣾⡿⠿⠛⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+"                ⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⢰⡆⢀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+"                ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⢁⣸⡿⠂⠀⠀⠀⠀⠀⠀⠀⠀"
+"                ⠀⠀⠀⠀⠀⠀⠀⠀⣴⠞⠛⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+"                ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
 ""
-" ️️⚕️️⚕️⚕️️⚕️⚕️⚕️⚕️️⚕️️⚕️️⚕️⚕️⚕️⚕️️️⚕️⚕️⚕️⚕️️⚕️️⚕️️⚕️⚕️⚕️⚕️️⚕️️ "
+"   ⚕️⚕️️⚕️⚕️⚕️⚕️️⚕️️⚕️️⚕️⚕️⚕️⚕️️️⚕️⚕️⚕️⚕️️⚕️️⚕️️⚕️⚕️⚕️⚕️️️️"
                    ))
          (longest-line (apply #'max (mapcar #'length banner))))
     (put-text-property
@@ -149,16 +154,39 @@
                                 "Reload last session"
                                 "Open project"
                                 "Jump to bookmark"
+                                "Open org-agenda"
                                 "Open private configuration")))
                                 +doom-dashboard-menu-sections))
 
+;; Shortcut to open agenda file
+(add-to-list '+doom-dashboard-menu-sections
+             '("Open org-agenda file"
+               :icon (nerd-icons-octicon "nf-oct-log" :face 'doom-dashboard-menu-title)
+               :when (featurep! :lang org)
+               ;; :face (:inherit (doom-dashboard-menu-title bold))
+               :action +my/open-org-agenda-file))
+
 ;; Open org-daily
 (add-to-list '+doom-dashboard-menu-sections
-             '("Open Today's org-roam"
+             '("Open today's org-roam"
                :icon (nerd-icons-octicon "nf-oct-sun" :face 'doom-dashboard-menu-title)
                :when (featurep! :lang org +roam)
-               :face (:inherit (doom-dashboard-menu-title normal))
+               ;; :face (:inherit (doom-dashboard-menu-title bold))
                :action org-roam-dailies-goto-today))
+
+;; Open org-agenda and show all agenda and all TODOs
+(defun +my/org-agenda-all-todos ()
+  "Open the org-agenda dispatcher and display all agenda and all TODOs"
+  (interactive)
+  (org-agenda nil "n"))
+
+(add-to-list '+doom-dashboard-menu-sections
+             '("Show all agenda & TODOs"
+               :icon (nerd-icons-octicon "nf-oct-calendar" :face 'doom-dashboard-menu-title)
+               :when (featurep! :lang org)
+               :key "SPC o A n"
+               ;; :face (:inherit (doom-dashboard-menu-title bold))
+               :action +my/org-agenda-all-todos))
 
 ;; Footer
 (add-hook! '+doom-dashboard-functions :append

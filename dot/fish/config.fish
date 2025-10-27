@@ -8,6 +8,11 @@ set EDITOR "vim"
 # emacs
 fish_add_path ~/.config/emacs/bin
 
+# go
+fish_add_path ~/Documents/git/go/bin
+fish_add_path /usr/lib/go/bin
+export GOPATH="$HOME/Documents/git/go"
+
 # fzf
 fzf --fish | source
 
