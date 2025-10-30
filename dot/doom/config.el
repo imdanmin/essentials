@@ -24,8 +24,19 @@
 ;;(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
 ;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
 (setq doom-font (font-spec :family "Iosevka Nerd Font" :size 16))
+(setq doom-theme 'doom-nord-aurora)
 
-;;
+;; Org Header Sizes
+(custom-set-faces!
+  '(org-level-1 :weight bold :slant italic :height 2.2 :foreground "#EE7733")
+  '(org-level-2 :weight bold :slant italic :height 1.8 :foreground "#009E73")
+  '(org-level-3 :weight bold :slant italic :height 1.4 :foreground "#0072B5")
+  '(org-level-4 :weight bold :slant italic :height 1.1 :foreground "#D55E00")
+  '(org-level-5 :weight bold :slant italic :height 1.05 :foreground "#CC79A7")
+  '(org-level-6 :weight bold :slant italic :height 1.0 :foreground "#E69F00")
+  '(org-level-7 :weight bold :slant italic :height 1.0 :foreground "#33BBEE")
+  '(org-level-8 :weight bold :slant italic :height 1.0 :foreground "#BBBBBB"))
+
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
 ;; refresh your font settings. If Emacs still can't find your font, it likely
@@ -34,7 +45,6 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-nord-aurora)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -92,6 +102,11 @@
 (map! :leader
       :desc "Open org-agenda file"
       "o a f" #'+my/open-org-agenda-file)
+
+;; org-agenda week-span
+(setq org-agenda-span 21
+      org-agenda-start-on-weekday nil
+      org-agenda-start-day "-3d")
 
 ;; shell
 (setq shell-file-name (executable-find "bash"))
