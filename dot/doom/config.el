@@ -27,15 +27,20 @@
 (setq doom-theme 'doom-nord-aurora)
 
 ;; Org Header Sizes
-(custom-set-faces!
-  '(org-level-1 :weight bold :slant italic :height 2.2 :foreground "#EE7733")
-  '(org-level-2 :weight bold :slant italic :height 1.8 :foreground "#009E73")
-  '(org-level-3 :weight bold :slant italic :height 1.4 :foreground "#0072B5")
-  '(org-level-4 :weight bold :slant italic :height 1.1 :foreground "#D55E00")
-  '(org-level-5 :weight bold :slant italic :height 1.05 :foreground "#CC79A7")
-  '(org-level-6 :weight bold :slant italic :height 1.0 :foreground "#E69F00")
-  '(org-level-7 :weight bold :slant italic :height 1.0 :foreground "#33BBEE")
-  '(org-level-8 :weight bold :slant italic :height 1.0 :foreground "#BBBBBB"))
+(after! org
+  (custom-set-faces!
+    '(org-level-1 :weight bold :slant italic :height 2.2 :foreground "#EE7733")
+    '(org-level-2 :weight bold :slant italic :height 1.8 :foreground "#009E73")
+    '(org-level-3 :weight bold :slant italic :height 1.4 :foreground "#0072B5")
+    '(org-level-4 :weight bold :slant italic :height 1.1 :foreground "#D55E00")
+    '(org-level-5 :weight bold :slant italic :height 1.05 :foreground "#CC79A7")
+    '(org-level-6 :weight bold :slant italic :height 1.0 :foreground "#E69F00")
+    '(org-level-7 :weight bold :slant italic :height 1.0 :foreground "#33BBEE")
+    '(org-level-8 :weight bold :slant italic :height 1.0 :foreground "#BBBBBB")
+    '(org-modern-date-active :height 1.6)
+    '(org-modern-date-inactive :height 1.6)
+    '(org-todo :inherit (org-todo org-modern-label) :height 1.6)
+    '(org-special-keyword :underline t :height 1.6)))
 
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
@@ -181,14 +186,6 @@
                ;; :face (:inherit (doom-dashboard-menu-title bold))
                :action +my/open-org-agenda-file))
 
-;; Open org-daily
-(add-to-list '+doom-dashboard-menu-sections
-             '("Open today's org-roam"
-               :icon (nerd-icons-octicon "nf-oct-sun" :face 'doom-dashboard-menu-title)
-               :when (featurep! :lang org +roam)
-               ;; :face (:inherit (doom-dashboard-menu-title bold))
-               :action org-roam-dailies-goto-today))
-
 ;; Open org-agenda and show all agenda and all TODOs
 (defun +my/org-agenda-all-todos ()
   "Open the org-agenda dispatcher and display all agenda and all TODOs"
@@ -203,6 +200,24 @@
                ;; :face (:inherit (doom-dashboard-menu-title bold))
                :action +my/org-agenda-all-todos))
 
+;; Open org-daily
+(add-to-list '+doom-dashboard-menu-sections
+             '("Open today's org-roam"
+               :icon (nerd-icons-octicon "nf-oct-sun" :face 'doom-dashboard-menu-title)
+               :when (featurep! :lang org +roam)
+               ;; :face (:inherit (doom-dashboard-menu-title bold))
+               :action org-roam-dailies-goto-today))
+
 ;; Footer
 (add-hook! '+doom-dashboard-functions :append
   (insert "\n" (+doom-dashboard--center +doom-dashboard--width "Push Ups. Study Hard. Don't Stop.")))
+
+;; Set wind chime sound when timer expires.
+(setq org-clock-sound "~/Media/Sound/windchime.wav")
+
+;; org-pomodoro
+(after! org-pomodoro
+  (setq org-pomodoro-length            25
+        org-pomodoro-short-break-length 5
+        org-pomodoro-long-break-length 15
+        org-pomodoro-manual-break       t))
