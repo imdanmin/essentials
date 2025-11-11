@@ -189,7 +189,7 @@ alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
 alias cls='echo "" > "$HOME/.local/share/fish/fish_history"'
 
 # abbreviations
-abbr -a 'upd' 'sudo pacman -Syyu && yay -Syyu'
+abbr -a 'upd' 'sudo pacman -Syyu && yay -Syyu && doom upgrade && flatpak update'
 
 abbr -a 'yt-dlp' 'yt-dlp -f "bestvideo[height<=360][vcodec^=avc1]+bestaudio[ext=m4a]/best[height<=360]" \
        -S "height:360,+size,+vbr:800,+abr:96" \

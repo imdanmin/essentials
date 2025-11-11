@@ -98,6 +98,16 @@
   ;; (setq evil-escape-delay 0.1)
 )
 
+;; Open org directory
+(defun +my/open-org-directory ()
+  "Open org directory"
+  (interactive)
+  (dired "/home/dan/Documents/org"))
+
+(map! :leader
+      :desc "Open org-agenda file"
+      "o a F" #'+my/open-org-directory)
+
 ;; Open org-agenda file
 (defun +my/open-org-agenda-file ()
   "Open org-agenda file"
@@ -201,12 +211,12 @@
                :action +my/org-agenda-all-todos))
 
 ;; Open org-daily
-(add-to-list '+doom-dashboard-menu-sections
-             '("Open today's org-roam"
-               :icon (nerd-icons-octicon "nf-oct-sun" :face 'doom-dashboard-menu-title)
-               :when (featurep! :lang org +roam)
-               ;; :face (:inherit (doom-dashboard-menu-title bold))
-               :action org-roam-dailies-goto-today))
+;; (add-to-list '+doom-dashboard-menu-sections
+;;              '("Open today's org-roam"
+;;                :icon (nerd-icons-octicon "nf-oct-sun" :face 'doom-dashboard-menu-title)
+;;                :when (featurep! :lang org +roam)
+;;                ;; :face (:inherit (doom-dashboard-menu-title bold))
+;;                :action org-roam-dailies-goto-today))
 
 ;; Footer
 (add-hook! '+doom-dashboard-functions :append
@@ -217,7 +227,17 @@
 
 ;; org-pomodoro
 (after! org-pomodoro
-  (setq org-pomodoro-length            25
-        org-pomodoro-short-break-length 5
-        org-pomodoro-long-break-length 15
-        org-pomodoro-manual-break       t))
+  (setq org-pomodoro-length              50
+        org-pomodoro-short-break-length  10
+        org-pomodoro-long-break-length   30
+        org-pomodoro-manual-break        t)
+
+  (setq org-pomodoro-start-sound        "~/Media/Sound/windchime.wav"
+        org-pomodoro-short-break-sound  "~/Media/Sound/windchime.wav"
+        org-pomodoro-long-break-sound   "~/Media/Sound/windchime.wav"
+        org-pomodoro-overtime-sound     "~/Media/Sound/windchime.wav"
+        org-pomodoro-finished-sound     "~/Media/Sound/windchime.wav"
+        org-pomodoro-killed-sound       "~/Media/Sound/windchime.wav"))
+
+;; Set org drawers
+(setq org-log-into-drawer t)
