@@ -228,6 +228,9 @@ keymap = [
 	# Spotting
 	# { on = "<Tab>", run = "spot", desc = "Spot hovered file" },
 
+    # Custom Operation
+	{ on = "e",   run = "shell 'vim \"$@\"' --block",                        desc = "Edit selected files in vim" },
+
 	# Operation
 	{ on = "o",         run = "open",                        desc = "Open selected files" },
 	{ on = "O",         run = "open --interactive",          desc = "Open selected files interactively" },
@@ -301,6 +304,7 @@ keymap = [
 	{ on = [ "g", "f" ],       run = "follow",           desc = "Follow hovered symlink" },
 
     # Custom Goto
+    { on = [ "g", "D" ],       run = "cd ~/Documents/",   desc = "Go ~/Documents" },
 	{ on = [ "g", "l" ],       run = "cd ~/.local/",   desc = "Go ~/.local" },
 	{ on = [ "g", "m" ],       run = "cd ~/MCAT",   desc = "Go ~/MCAT" },
 	{ on = [ "g", "M" ],       run = "cd ~/Media",   desc = "Go ~/Media" },

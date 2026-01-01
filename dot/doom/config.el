@@ -227,9 +227,9 @@
 
 ;; org-pomodoro
 (after! org-pomodoro
-  (setq org-pomodoro-length              50
-        org-pomodoro-short-break-length  10
-        org-pomodoro-long-break-length   30
+  (setq org-pomodoro-length              25
+        org-pomodoro-short-break-length  5
+        org-pomodoro-long-break-length   15
         org-pomodoro-manual-break        t)
 
   (setq org-pomodoro-start-sound        "~/Media/Sound/windchime.wav"

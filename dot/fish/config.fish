@@ -191,12 +191,15 @@ alias cls='echo "" > "$HOME/.local/share/fish/fish_history"'
 # abbreviations
 abbr -a 'upd' 'sudo pacman -Syyu && yay -Syyu && doom upgrade && flatpak update'
 
-abbr -a 'yt-dlp' 'yt-dlp -f "bestvideo[height<=360][vcodec^=avc1]+bestaudio[ext=m4a]/best[height<=360]" \
+abbr -a 'video' 'yt-dlp -f "bestvideo[height<=360][vcodec^=avc1]+bestaudio[ext=m4a]/best[height<=360]" \
        -S "height:360,+size,+vbr:800,+abr:96" \
-       --merge-output-format mp4 \
+       --merge-output-format mp4\
        --embed-metadata --embed-thumbnail \
+       --write-auto-subs --sub-langs "en" \
        --restrict-filenames --continue \
-       --retries 5'
+       --retries 10'
+
+abbr -a 'music' 'yt-dlp -f "bestaudio/best" -x --audio-format flac --embed-thumbnail --embed-metadata --no-write-description --no-write-info-json --no-write-comments'
 
 abbr -a 'ocrmypdf' 'ocrmypdf --output-type pdf --redo-ocr --jbig2-lossy --optimize 2'
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-RAIN="$HOME/Media/Sound/rain.mp3"
+RAIN="$HOME/Media/SOUND/rain.mp3"
 VOLUME=60
 
 mpv --loop --quiet --really-quiet --volume=${VOLUME} ${RAIN} &

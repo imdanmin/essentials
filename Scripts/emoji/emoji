@@ -1,0 +1,19 @@
+#!/bin/bash
+
+file="$HOME/Documents/git/essentials/Scripts/emoji/emoji-data-qualified.txt"
+
+if [[ ! -f "$file" ]]; then
+  echo "Error: File '$file' not found." >&2
+  exit 1
+fi
+
+temp_file="/tmp/emoji.XXXXXX"
+shuf "$file" > "$temp_file"
+
+selected=$(cat "$temp_file" | rofi -dmenu -p "Emoji: " -i -l 30)
+
+if [[ -n "$selected" ]]; then
+  emo=$(echo "$selected" | awk '{print $1}')
+  echo -n "$emo" | xsel --clipboard --input
+  notify-send "Copied $emo to clipboard."
+fi

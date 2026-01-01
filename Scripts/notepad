@@ -1,0 +1,3 @@
+#!/bin/bash
+
+konsole --profile Libellus -e bash -c "echo -ne '\033]30;Libellus\007'; vim"

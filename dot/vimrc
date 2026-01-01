@@ -1,3 +1,9 @@
+set shortmess+=at
+set cmdheight=2
+set report=99999
+set nomore
+
+imap <C-H> <C-W>
 set number
 set relativenumber
 set ignorecase infercase
@@ -59,13 +65,12 @@ inoremap . .<C-g>u
 inoremap , ,<C-g>u
 inoremap ! !<C-g>u
 inoremap ? ?<C-g>u
-nnoremap <M-j> :<C-u>m .+1<CR>==
-nnoremap <M-k> :<C-u>m .-2<CR>==
-inoremap <M-j> <ESC>:<C-u>m .+1<CR>==gi
-inoremap <M-k> <ESC>:<C-u>m .-2<CR>==gi
-vnoremap <M-j> :<C-u>m '>+1<CR>gv=gv
-vnoremap <M-k> :<C-u>m '<-2<CR>gv=gv
+nnoremap <silent> <M-j> :<C-u>m .+1<CR>==
+nnoremap <silent> <M-k> :<C-u>m .-2<CR>==
+inoremap <silent> <M-j> <ESC>:<C-u>m .+1<CR>==gi
+inoremap <silent> <M-k> <ESC>:<C-u>m .-2<CR>==gi
+vnoremap <silent> <M-j> :<C-u>m '>+1<CR>gv=gv
+vnoremap <silent> <M-k> :<C-u>m '<-2<CR>gv=gv
 nmap <silent> <leader>tl :<C-u>set invnumber<CR>:<C-u>set invrelativenumber<CR>
 nnoremap <silent> <leader>ts :<C-u>set invspell spelllang=en_us<CR>
 map <silent> <leader>dd :<C-u>Explore<CR>
-imap <C-H> <C-W>
