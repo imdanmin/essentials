@@ -74,3 +74,5 @@ vnoremap <silent> <M-k> :<C-u>m '<-2<CR>gv=gv
 nmap <silent> <leader>tl :<C-u>set invnumber<CR>:<C-u>set invrelativenumber<CR>
 nnoremap <silent> <leader>ts :<C-u>set invspell spelllang=en_us<CR>
 map <silent> <leader>dd :<C-u>Explore<CR>
+
+nnoremap <silent> <leader>x :%d<CR>

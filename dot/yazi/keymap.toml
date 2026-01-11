@@ -308,7 +308,7 @@ keymap = [
 	{ on = [ "g", "l" ],       run = "cd ~/.local/",   desc = "Go ~/.local" },
 	{ on = [ "g", "m" ],       run = "cd ~/MCAT",   desc = "Go ~/MCAT" },
 	{ on = [ "g", "M" ],       run = "cd ~/Media",   desc = "Go ~/Media" },
-	{ on = [ "g", "s" ],       run = "cd ~/School/2025-Fall",   desc = "Go School (Fall 2025)" },
+	{ on = [ "g", "s" ],       run = "cd ~/School/2026-Spring",   desc = "Go School (Spring 2026)" },
 	{ on = [ "g", "y" ],       run = "cd /tmp/clanculum",   desc = "Go vault" },
 
 	# Tabs

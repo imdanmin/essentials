@@ -38,6 +38,8 @@ alias outcog="fusermount -u $CLCLM"
 ## Run fastfetch as welcome message
 function fish_greeting
     fastfetch
+    echo
+    cat "/home/dan/Documents/todo"
 end
 
 # Format man pages
@@ -190,6 +192,16 @@ alias cls='echo "" > "$HOME/.local/share/fish/fish_history"'
 
 # abbreviations
 abbr -a 'upd' 'sudo pacman -Syyu && yay -Syyu && doom upgrade && flatpak update'
+
+abbr -a 'gente' 'yt-dlp -f "bv*+ba/b" \
+    --embed-metadata --embed-thumbnail \
+    --write-subs \
+    --write-auto-subs \
+    --sub-langs es \
+    --embed-subs \
+    --sponsorblock-remove all \
+    --remote-components ejs:github \
+    '
 
 abbr -a 'video' 'yt-dlp -f "bestvideo[height<=360][vcodec^=avc1]+bestaudio[ext=m4a]/best[height<=360]" \
        -S "height:360,+size,+vbr:800,+abr:96" \
