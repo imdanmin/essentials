@@ -1,4 +1,6 @@
 {
     "version": "2.2.0",
-    "autoload": {}
+    "autoload": {
+        "8BitDo Zero 2 gamepad": "Anki"
+    }
 }
