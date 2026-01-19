@@ -1,0 +1,78 @@
+#!/usr/bin/env python3
+"""
+Center an ASCII art file in the current terminal
+"""
+
+import os
+import shutil
+import sys
+from pathlib import Path
+
+
+def get_terminal_size():
+    """Get current terminal width and height"""
+    try:
+        # This is the most reliable way in Python 3.3+
+        size = shutil.get_terminal_size(fallback=(80, 24))
+        return size.columns, size.lines
+    except Exception:
+        # Fallback if get_terminal_size fails
+        try:
+            return os.get_terminal_size().columns, os.get_terminal_size().lines
+        except Exception:
+            return 80, 24
+
+
+def main():
+    if len(sys.argv) != 2:
+        print("Usage: center-ascii.py artwork.txt")
+        print("   or: python center-ascii.py artwork.txt")
+        sys.exit(1)
+
+    filepath = Path(sys.argv[1])
+
+    if not filepath.is_file():
+        print(f"Error: File not found → {filepath}")
+        sys.exit(1)
+
+    # 1. Get terminal dimensions
+    term_width, _ = get_terminal_size()
+
+    # 2. Read the file
+    try:
+        with open(filepath, encoding="utf-8") as f:
+            lines = f.read().rstrip().splitlines()
+    except Exception as e:
+        print(f"Error reading file: {e}")
+        sys.exit(1)
+
+    if not lines:
+        print("File is empty")
+        sys.exit(0)
+
+    # 3. Find the longest line (that's our art width)
+    art_width = max(len(line) for line in lines)
+
+    # If art is wider than terminal → we can't really center it nicely
+    if art_width > term_width:
+        print(f"Warning: Art is wider than terminal ({art_width} > {term_width})")
+        left_padding = 0
+    else:
+        # Calculate how many spaces to add on the left
+        left_padding = (term_width - art_width) // 2
+
+    # 4. Print centered
+    padding = " " * left_padding
+
+    for line in lines:
+        # We use rstrip() to remove trailing spaces that might mess up centering
+        # but preserve leading spaces that are part of the art
+        print(padding + line.rstrip())
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("\nCanceled.")
+        sys.exit(130)

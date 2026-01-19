@@ -39,7 +39,7 @@ alias outcog="fusermount -u $CLCLM"
 function fish_greeting
     fastfetch
     echo
-    cat "/home/dan/Documents/todo"
+    ascii_center "/home/dan/Documents/todo"
 end
 
 # Format man pages
