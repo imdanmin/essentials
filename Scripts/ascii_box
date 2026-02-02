@@ -1,0 +1,39 @@
+#!/usr/bin/env python3
+
+import sys
+from wcwidth import wcswidth
+
+PADDING = 2  # spaces on each side
+
+def ascii_box(message: str, padding: int = 1) -> str:
+    lines = message.splitlines() or [""]
+
+    # Add horizontal padding to each line
+    padded_lines = [
+        " " * padding + line + " " * padding
+        for line in lines
+    ]
+
+    # Compute max display width
+    max_width = max(wcswidth(line) for line in padded_lines)
+
+    top = "╭" + "─" * max_width + "╮"
+    bottom = "╰" + "─" * max_width + "╯"
+
+    middle = []
+    for line in padded_lines:
+        extra_spaces = max_width - wcswidth(line)
+        middle.append("│" + line + " " * extra_spaces + "│")
+
+    return "\n".join([top, *middle, bottom])
+
+def main():
+    if len(sys.argv) < 2:
+        print("Usage: box.py <message>")
+        sys.exit(1)
+
+    message = " ".join(sys.argv[1:])
+    print(ascii_box(message, PADDING))
+
+if __name__ == "__main__":
+    main()

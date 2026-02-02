@@ -1,3 +1,5 @@
+# windows script
+
 import time
 import random
 from pynput.mouse import Controller
@@ -13,7 +15,7 @@ while True:
     mouse.scroll(0, -c)
     print(f"Sleeping for {a} seconds.")
     time.sleep(a)
-    
+
     print(f"Scroll Up: {d} units")
     mouse.scroll(0, d)
     print(f"Sleeping for {b} seconds.")

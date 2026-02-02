@@ -1,4 +1,5 @@
 #!/home/dan/.local/env/misc/bin/python
+# converts m4a or mp4 without video to video
 
 import os
 import sys

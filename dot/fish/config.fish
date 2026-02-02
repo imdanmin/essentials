@@ -194,13 +194,20 @@ alias cls='echo "" > "$HOME/.local/share/fish/fish_history"'
 # abbr -a 'upd' 'sudo pacman -Syyu && yay -Syyu && doom upgrade && flatpak update'
 abbr -a 'upd' 'sudo pacman -Syyu && doom upgrade && flatpak update'
 
-abbr -a 'video' 'yt-dlp -f "bestvideo[height<=480]+bestaudio/best" \
-       --embed-metadata \
-       --restrict-filenames --continue \
-       --sponsorblock-remove all \
-       --remote-components ejs:github'
+abbr -a 'ytdlp' 'yt-dlp \
+    -f "bestvideo[height<=480][vcodec^=avc1]+bestaudio[acodec^=mp4a]/best[height<=480]" \
+    --sponsorblock-remove all \
+    --remote-components ejs:github \
+    --no-playlist \
+    '
 
-abbr -a 'music' 'yt-dlp -f "bestaudio/best" -x --audio-format flac --embed-thumbnail --embed-metadata --no-write-description --no-write-info-json --no-write-comments'
+abbr -a 'video' 'yt-dlp -f "bestvideo[height<=480]+bestaudio/best" \
+   --embed-metadata \
+   --restrict-filenames --continue \
+   --sponsorblock-remove all \
+   --remote-components ejs:github'
+
+abbr -a 'music' 'yt-dlp -f "bestaudio/best" -x --audio-format flac --embed-thumbnail --embed-metadata --no-write-description --no-write-info-json --no-write-comments --remote-components ejs:github'
 
 abbr -a 'ocrmypdf' 'ocrmypdf --output-type pdf --redo-ocr --jbig2-lossy --optimize 2'
 
