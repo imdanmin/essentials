@@ -10,6 +10,7 @@ TMPF="/tmp/playmesg.txt"
 ascii_center "/home/dan/Documents/asclepius"
 ascii_center "/home/dan/Documents/todo"
 ascii_box "$MESG" > "$TMPF"
+echo
 ascii_center "$TMPF"
 
 # Random start between 0% and 98%

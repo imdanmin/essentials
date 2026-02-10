@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+# 🍉 Subak Player 🍉
+
+DIR="/home/dan/Media/SOUND/Twinkling Watermelon (1969)"
+MESG="🎶  ►  Now Playing: ✨ 반짝이는 워터멜론 🍉 "
+TMPF="/tmp/playmesg.txt"
+
+# Index of song to loop from
+start_index=10 # 11th File
+
+ascii_box "$MESG" > "$TMPF"
+
+draw_header() {
+    clear
+    ascii_center "/home/dan/Documents/asclepius"
+    ascii_center "/home/dan/Documents/todo"
+    echo
+    ascii_center "$TMPF"
+}
+
+MPV_OPTS=(
+    --force-window=no
+    --no-video --term-osd-bar
+    --display-tags=no
+    --msg-level=ffmpeg/demuxer=no,ao=no,af=no
+    --term-status-msg=$'⏳  ${time-pos} / ${duration}  ✧  ${percent-pos}%'
+    --term-playing-msg=$'\n🍉 ${metadata/title} · ${metadata/artist} · ${metadata/album} 🍉'
+)
+
+# ⚔️  Once Playthrough
+
+for TRACK in "$DIR"/*.{mp3,flac,wav,ogg,m4a,opus,aac,wma} ; do
+    [[ -f "$TRACK" ]] || continue
+
+    draw_header
+
+    mpv \
+        "${MPV_OPTS[@]}" \
+        --loop-playlist=no \
+        "$TRACK"
+done
+
+shopt -s nullglob
+
+# 🎧 Ambient BGM Mode
+
+while true; do
+    mapfile -t files < <(printf '%s\n' "$DIR"/*.{mp3,flac,wav,ogg,opus,m4a,aac} 2>/dev/null | sort -fV)
+
+    # Play from start_index to end
+    for (( i = start_index; i < ${#files[@]}; i++ )); do
+        file="${files[i]}"
+        [[ -f "$file" ]] || continue
+
+        draw_header
+        mpv \
+            "${MPV_OPTS[@]}" \
+            --loop-playlist=no \
+            "$file"
+    done
+    sleep 0.5
+done

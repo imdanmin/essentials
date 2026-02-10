@@ -211,6 +211,9 @@ abbr -a 'music' 'yt-dlp -f "bestaudio/best" -x --audio-format flac --embed-thumb
 
 abbr -a 'ocrmypdf' 'ocrmypdf --output-type pdf --redo-ocr --jbig2-lossy --optimize 2'
 
+# tomatoshell
+abbr -a 'pom' 'tomatoshell -t 25 -d 5 -n 4'
+
 # yazi
 function y
 	set tmp (mktemp -t "yazi-cwd.XXXXXX")
