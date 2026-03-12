@@ -1,0 +1,54 @@
+1ST DECLENSION (water)
+NOM   GEN   DAT   ACC   ABL
+
+
+
+2ND DECLENSION (slave)
+NOM   GEN   DAT   ACC   ABL
+
+
+
+2ND DECLENSION (gift)
+NOM   GEN   DAT   ACC   ABL
+
+
+
+3RD DECLENSION (king)
+NOM   GEN   DAT   ACC   ABL
+
+
+
+3RD DECLENSION (body)
+NOM   GEN   DAT   ACC   ABL
+
+
+
+3RD DECLENSION I-STEM (citizen)
+NOM   GEN   DAT   ACC   ABL
+
+
+
+3RD DECLENSION I-STEM (sea)
+NOM   GEN   DAT   ACC   ABL
+
+
+
+4TH DECLENSION I-STEM (fruit)
+NOM   GEN   DAT   ACC   ABL
+
+
+
+4TH DECLENSION I-STEM (horn)
+NOM   GEN   DAT   ACC   ABL
+
+
+
+5TH DECLENSION I-STEM (thing)
+NOM   GEN   DAT   ACC   ABL
+
+
+
+5TH DECLENSION I-STEM (day)
+NOM   GEN   DAT   ACC   ABL
+
+

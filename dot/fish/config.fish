@@ -31,15 +31,39 @@ alias necessary-verbs="sudo ~/.local/bin/necessary-verbs"
 
 # gocryptfs
 set CLCLM "/tmp/clanculum"
-alias incog="mkdir -p $CLCLM > /dev/null && gocryptfs ~/.local/vault $CLCLM && cd $CLCLM"
+# alias incog="mkdir -p $CLCLM > /dev/null && gocryptfs ~/.local/vault $CLCLM && cd $CLCLM"
+alias incog="mkdir -p $CLCLM > /dev/null && gocryptfs "$HOME/Documents/International/JP/eloq" $CLCLM && cd $CLCLM"
 alias outcog="fusermount -u $CLCLM"
+
+# Display last pacman update time
+function pacman_last_update
+    set last_update_str (grep "starting full system upgrade" /var/log/pacman.log | tail -n 1 | cut -d ']' -f 1 | tr -d '[')
+
+    if test -z "$last_update_str"
+        echo "No record of a full system upgrade found in /var/log/pacman.log."
+        return 1
+    end
+
+    set last_epoch (date -d "$last_update_str" +%s)
+    set current_epoch (date +%s)
+
+    set diff_sec (math $current_epoch - $last_epoch)
+
+    set days (math -s0 "$diff_sec / 86400")
+    set hours (math -s0 "($diff_sec % 86400) / 3600")
+    set mins (math -s0 "($diff_sec % 3600) / 60")
+
+    echo (set_color blue)"🐭 Last Pacrat 🧀: "(set_color red)"$days days "(set_color magenta)"$hours hours"(set_color blue)" and "(set_color green)"$mins minutes ago."(set_color normal)
+end
 
 ## Set values
 ## Run fastfetch as welcome message
 function fish_greeting
     fastfetch
     echo
-    ascii_center "/home/dan/Documents/todo"
+    ascii_center --string $(pacman_last_update)
+    echo
+    ascii_center --file "/home/dan/Documents/todo"
 end
 
 # Format man pages
@@ -191,6 +215,9 @@ alias rip="expac --timefmt='%Y-%m-%d %T' '%l\t%n %v' | sort | tail -200 | nl"
 alias cls='echo "" > "$HOME/.local/share/fish/fish_history"'
 
 # abbreviations
+# qpdf new empty pdf
+abbr -a 'pdfsplit' 'qpdf --empty --pages A.pdf 1-, -- B.pdf'
+
 # abbr -a 'upd' 'sudo pacman -Syyu && yay -Syyu && doom upgrade && flatpak update'
 abbr -a 'upd' 'sudo pacman -Syyu && doom upgrade && flatpak update'
 
@@ -201,7 +228,7 @@ abbr -a 'ytdlp' 'yt-dlp \
     --no-playlist \
     '
 
-abbr -a 'video' 'yt-dlp -f "bestvideo[height<=480]+bestaudio/best" \
+abbr -a 'video' 'yt-dlp -f "bestvideo[height<=360]+bestaudio/best" \
    --embed-metadata \
    --restrict-filenames --continue \
    --sponsorblock-remove all \
@@ -212,7 +239,7 @@ abbr -a 'music' 'yt-dlp -f "bestaudio/best" -x --audio-format flac --embed-thumb
 abbr -a 'ocrmypdf' 'ocrmypdf --output-type pdf --redo-ocr --jbig2-lossy --optimize 2'
 
 # tomatoshell
-abbr -a 'pom' 'tomatoshell -t 25 -d 5 -n 4'
+abbr -a 'pom' 'tomatoshell -t 25 -d 5 -n 6'
 
 # yazi
 function y

@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+TEMPFILE="$HOME/Documents/International/LAT/Declensions/template.txt"
+KEYFILE="$HOME/Documents/International/LAT/Declensions/key.txt"
+USRFILE=$(mktemp /tmp/DOWLING_XXXXXX.txt)
+
+cp $TEMPFILE $USRFILE
+vim $USRFILE
+
+vimdiff $USRFILE $KEYFILE

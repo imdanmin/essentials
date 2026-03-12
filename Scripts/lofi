@@ -5,13 +5,11 @@ clear
 
 TRACK="/home/dan/Media/SOUND/Brain.FM/brainfm-deep-focus.mp4"
 MESG="🎶  Now Playing: Brain.FM 🧠 - Deep Focus  🎶" > "/tmp/playmsg.txt"
-TMPF="/tmp/playmesg.txt"
 
-ascii_center "/home/dan/Documents/asclepius"
-ascii_center "/home/dan/Documents/todo"
-ascii_box "$MESG" > "$TMPF"
+ascii_center --file "/home/dan/Documents/asclepius"
+ascii_center --file "/home/dan/Documents/todo"
 echo
-ascii_center "$TMPF"
+ascii_center --string "$(ascii_box $MESG)"
 
 # Random start between 0% and 98%
 START_PERCENT=$((RANDOM % 98))

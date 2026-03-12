@@ -9,11 +9,15 @@ RESET='\e[0m'
 systemctl --user disable warp-taskbar.service
 systemctl --user stop warp-taskbar.service
 
+ping_cloud() {
+    curl -s "https://cloudflare.com/cdn-cgi/trace" | grep -E ".*warp.*" -C50 --color=always | bat --file-name "https://cloudflare.com/cdn-cgi/trace" --style=numbers,header,grid
+}
+
 # Check the status of warp-svc.service
 SERVICE_STATUS=$(systemctl is-active warp-svc.service | tr '[:lower:]' '[:upper:]')
 
 if [ "$SERVICE_STATUS" = "ACTIVE" ] ; then
-    curl -s https://www.cloudflare.com/cdn-cgi/trace/ | grep -E ".*warp.*" -C50 --color=always | bat --file-name "cloudflare.com/cdn-cgi/trace" --style=numbers,header,grid
+    ping_cloud
 
     # Prompt to disable and stop the service
     echo -e "warp-svc.service is currently ${GREEN}[$SERVICE_STATUS]${RESET}."
@@ -72,7 +76,7 @@ else
         echo
         sleep 0.5
 
-        curl -s https://www.cloudflare.com/cdn-cgi/trace/ | grep -E ".*warp.*" -C50 --color=always | bat --file-name "cloudflare.com/cdn-cgi/trace" --style=numbers,header,grid
+        ping_cloud
 
         echo
         echo -e "${GREEN}warp-svc.service has been started.${RESET}"
@@ -99,7 +103,7 @@ else
 
             sleep 1
 
-            curl -s https://www.cloudflare.com/cdn-cgi/trace/ | grep -E ".*warp.*" -C50 --color=always | bat --file-name "cloudflare.com/cdn-cgi/trace" --style=numbers,header,grid
+            ping_cloud
             sleep 0.5
         fi
 

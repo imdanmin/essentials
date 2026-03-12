@@ -1,78 +1,168 @@
 #!/usr/bin/env python3
 """
 Center an ASCII art file in the current terminal
+Good Vibes from Claude
 """
 
-import os
-import shutil
 import sys
-from pathlib import Path
+import os
+import re
+import unicodedata
 
 
-def get_terminal_size():
-    """Get current terminal width and height"""
-    try:
-        # This is the most reliable way in Python 3.3+
-        size = shutil.get_terminal_size(fallback=(80, 24))
-        return size.columns, size.lines
-    except Exception:
-        # Fallback if get_terminal_size fails
-        try:
-            return os.get_terminal_size().columns, os.get_terminal_size().lines
-        except Exception:
-            return 80, 24
+# ---------------------------------------------------------------------------
+# Width helpers
+# ---------------------------------------------------------------------------
+
+def _strip_ansi(text: str) -> str:
+    """Remove ANSI / terminal escape sequences (colors, cursor moves, etc.)."""
+    # Covers ESC[ ... m  (SGR), ESC] ... (OSC), and other common sequences
+    ansi_escape = re.compile(
+        r'\x1b'          # ESC
+        r'(?:'
+        r'\[[0-9;?]*[ -/]*[@-~]'   # CSI sequences  (ESC [ ... final)
+        r'|[@-Z\\-_]'              # Fe sequences    (ESC followed by 0x40–0x5F)
+        r'|\][^\x07\x1b]*(?:\x07|\x1b\\)'  # OSC     (ESC ] ... ST)
+        r')'
+    )
+    return ansi_escape.sub('', text)
 
 
-def main():
-    if len(sys.argv) != 2:
-        print("Usage: center-ascii.py artwork.txt")
-        print("   or: python center-ascii.py artwork.txt")
-        sys.exit(1)
+def _char_display_width(ch: str) -> int:
+    """
+    Return the display width of a single Unicode code-point:
+      - East-Asian Wide / Fullwidth  → 2
+      - Everything else (including most emojis via wcwidth logic) → 1
+      - Control / combining           → 0
+    We replicate wcwidth logic using unicodedata, but also handle emoji
+    presentation sequences and regional indicators (flags).
+    """
+    cp = ord(ch)
 
-    filepath = Path(sys.argv[1])
+    # C0/C1 controls → 0
+    if cp < 32 or 0x07F <= cp < 0x0A0:
+        return 0
 
-    if not filepath.is_file():
-        print(f"Error: File not found → {filepath}")
-        sys.exit(1)
+    eaw = unicodedata.east_asian_width(ch)
+    if eaw in ('W', 'F'):
+        return 2
 
-    # 1. Get terminal dimensions
-    term_width, _ = get_terminal_size()
+    category = unicodedata.category(ch)
+    # Combining / non-spacing marks → 0
+    if category in ('Mn', 'Me', 'Cf'):
+        return 0
 
-    # 2. Read the file
-    try:
-        with open(filepath, encoding="utf-8") as f:
-            lines = f.read().rstrip().splitlines()
-    except Exception as e:
-        print(f"Error reading file: {e}")
-        sys.exit(1)
+    return 1
 
+
+def display_width(text: str) -> int:
+    """
+    Return the visible display width of *text* after stripping ANSI codes.
+    Handles:
+      - ANSI color / attribute escape sequences (stripped to 0 width)
+      - East-Asian wide characters (counted as 2)
+      - Emoji: basic emoji are U+1Fxxx wide; skin-tone / ZWJ sequences
+        collapse to the width of the base character (≈ 2) because the
+        combining code-points are Cf (width 0).
+      - Regional indicator pairs (flags): two 1-wide chars that render as 2.
+    """
+    plain = _strip_ansi(text)
+
+    total = 0
+    i = 0
+    chars = list(plain)
+    n = len(chars)
+
+    while i < n:
+        ch = chars[i]
+        cp = ord(ch)
+
+        # Regional indicator symbols U+1F1E6–U+1F1FF form flag emoji in pairs.
+        # Each RI char has EAW = 'N' (width 1 normally), but a pair renders
+        # as a single flag glyph ~2 columns wide.
+        if 0x1F1E6 <= cp <= 0x1F1FF:
+            if i + 1 < n and 0x1F1E6 <= ord(chars[i + 1]) <= 0x1F1FF:
+                total += 2
+                i += 2
+                continue
+            else:
+                total += 1
+                i += 1
+                continue
+
+        w = _char_display_width(ch)
+        total += w
+        i += 1
+
+    return total
+
+
+# ---------------------------------------------------------------------------
+# Centering logic
+# ---------------------------------------------------------------------------
+
+def center_lines(lines: list[str], term_width: int) -> list[str]:
+    """
+    Return lines with leading spaces so the art block is centered as a whole.
+
+    The widest line determines the shared left-padding offset, so every line
+    shifts by the same amount and their horizontal positions relative to each
+    other are preserved exactly as in the source.
+    """
     if not lines:
-        print("File is empty")
-        sys.exit(0)
+        return lines
 
-    # 3. Find the longest line (that's our art width)
-    art_width = max(len(line) for line in lines)
+    max_width = max(display_width(line) for line in lines)
 
-    # If art is wider than terminal → we can't really center it nicely
-    if art_width > term_width:
-        print(f"Warning: Art is wider than terminal ({art_width} > {term_width})")
-        left_padding = 0
-    else:
-        # Calculate how many spaces to add on the left
-        left_padding = (term_width - art_width) // 2
+    if max_width >= term_width:
+        # Art wider than terminal — print as-is, no shift
+        return list(lines)
 
-    # 4. Print centered
-    padding = " " * left_padding
+    padding = (term_width - max_width) // 2
 
-    for line in lines:
-        # We use rstrip() to remove trailing spaces that might mess up centering
-        # but preserve leading spaces that are part of the art
-        print(padding + line.rstrip())
+    return [' ' * padding + line for line in lines]
 
 
-if __name__ == "__main__":
-    try:
-        main()
-    except KeyboardInterrupt:
-        print("\nCanceled.")
-        sys.exit(130)
+# ---------------------------------------------------------------------------
+# Entry point
+# ---------------------------------------------------------------------------
+
+def main() -> None:
+    args = sys.argv[1:]
+
+    if len(args) != 2 or args[0] not in ('--file', '--string', '-f', '-s'):
+        print(
+            "Usage:\n"
+            "  ascii_center --file   <path>\n"
+            "  ascii_center --string <text>",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
+    mode, value = args[0], args[1]
+
+    # Read content
+    if mode in ('--file', '-f'):
+        try:
+            with open(value, 'r', encoding='utf-8') as fh:
+                content = fh.read()
+        except FileNotFoundError:
+            print(f"center_ascii: file not found: {value}", file=sys.stderr)
+            sys.exit(1)
+        except OSError as exc:
+            print(f"center_ascii: cannot read file: {exc}", file=sys.stderr)
+            sys.exit(1)
+    else:  # --string / -s
+        # Support \n literals in the passed string
+        content = value.replace('\\n', '\n')
+
+    # Detect terminal width (fall back to 80)
+    term_width = os.get_terminal_size().columns if sys.stdout.isatty() else 80
+
+    lines = content.splitlines()
+    for line in center_lines(lines, term_width):
+        print(line)
+
+
+if __name__ == '__main__':
+    main()

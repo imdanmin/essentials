@@ -3,19 +3,17 @@
 
 DIR="/home/dan/Media/SOUND/Twinkling Watermelon (1969)"
 MESG="🎶  ►  Now Playing: ✨ 반짝이는 워터멜론 🍉 "
-TMPF="/tmp/playmesg.txt"
 
 # Index of song to loop from
-start_index=10 # 11th File
-
-ascii_box "$MESG" > "$TMPF"
+# start_index=10 # 11th File
+start_index=13 # 11th File
 
 draw_header() {
     clear
-    ascii_center "/home/dan/Documents/asclepius"
-    ascii_center "/home/dan/Documents/todo"
+    ascii_center --file "/home/dan/Documents/asclepius"
+    ascii_center --file "/home/dan/Documents/todo"
     echo
-    ascii_center "$TMPF"
+    ascii_center --string "$(ascii_box "$MESG")"
 }
 
 MPV_OPTS=(
@@ -24,10 +22,11 @@ MPV_OPTS=(
     --display-tags=no
     --msg-level=ffmpeg/demuxer=no,ao=no,af=no
     --term-status-msg=$'⏳  ${time-pos} / ${duration}  ✧  ${percent-pos}%'
-    --term-playing-msg=$'\n🍉 ${metadata/title} · ${metadata/artist} · ${metadata/album} 🍉'
+    --term-playing-msg=$'\n🍉 ${metadata/album} · ${metadata/artist} · ${metadata/title} 🍉'
+    --volume=60
 )
 
-# ⚔️  Once Playthrough
+⚔️  Once Playthrough
 
 for TRACK in "$DIR"/*.{mp3,flac,wav,ogg,m4a,opus,aac,wma} ; do
     [[ -f "$TRACK" ]] || continue

@@ -1,6 +1,6 @@
 [window]
-dimensions.columns = 30
-dimensions.lines = 15
+dimensions.columns = 50
+dimensions.lines = 20
 opacity = 0.5
 
 [font]

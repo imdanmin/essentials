@@ -2323,122 +2323,122 @@
 👤 bust in silhouette
 👥 busts in silhouette
 👣 footprints
-; component           # 🏻 light skin tone
-; component           # 🏼 medium-light skin tone
-; component           # 🏽 medium skin tone
-; component           # 🏾 medium-dark skin tone
-; component           # 🏿 dark skin tone
-; component           # 🦰 red hair
-; component           # 🦱 curly hair
-; component           # 🦳 white hair
-; component           # 🦲 bald
-🐵 monkey face
-🐒 monkey
-🦍 gorilla
-🦧 orangutan
-🐶 dog face
-🐕 dog
-🦮 guide dog
-🐕‍🦺 service dog
-🐩 poodle
-🐺 wolf
-🦊 fox
-🦝 raccoon
-🐱 cat face
-🐈 cat
-🦁 lion
-🐯 tiger face
-🐅 tiger
-🐆 leopard
-🐴 horse face
-🐎 horse
-🦄 unicorn
-🦓 zebra
-🦌 deer
-🐮 cow face
-🐂 ox
-🐃 water buffalo
-🐄 cow
-🐷 pig face
-🐖 pig
-🐗 boar
-🐽 pig nose
-🐏 ram
-🐑 ewe
-🐐 goat
-🐪 camel
-🐫 two-hump camel
-🦙 llama
-🦒 giraffe
-🐘 elephant
-🦏 rhinoceros
-🦛 hippopotamus
-🐭 mouse face
-🐁 mouse
-🐀 rat
-🐹 hamster
-🐰 rabbit face
-🐇 rabbit
-🐿️ chipmunk
-🦔 hedgehog
-🦇 bat
-🐻 bear
-🐨 koala
-🐼 panda
-🦥 sloth
-🦦 otter
-🦨 skunk
-🦘 kangaroo
-🦡 badger
-🐾 paw prints
-🦃 turkey
-🐔 chicken
-🐓 rooster
-🐣 hatching chick
-🐤 baby chick
-🐥 front-facing baby chick
-🐦 bird
-🐧 penguin
-🕊️ dove
-🦅 eagle
-🦆 duck
-🦢 swan
-🦉 owl
-🦩 flamingo
-🦚 peacock
-🦜 parrot
-🐸 frog
-🐊 crocodile
-🐢 turtle
-🦎 lizard
-🐍 snake
-🐲 dragon face
-🐉 dragon
-🦕 sauropod
-🦖 T-Rex
-🐳 spouting whale
-🐋 whale
-🐬 dolphin
-🐟 fish
-🐠 tropical fish
-🐡 blowfish
-🦭 seal
-🦫 beaver
-🦈 shark
-🐙 octopus
-🐚 spiral shell
-🐌 snail
-🦋 butterfly
-🐛 bug
-🐜 ant
-🐝 honeybee
-🐞 lady beetle
-🦗 cricket
-🕷️ spider
-🕸️ spider web
-🦂 scorpion
-🦟 mosquito
-🦠 microbe
+🏻 light skin tone
+🏼 medium-light skin tone
+🏽 medium skin tone
+🏾 medium-dark skin tone
+🏿 dark skin tone
+🦰 red hair
+🦱 curly hair
+🦳 white hair
+🦲 bald
+🐵 monkey face animal
+🐒 monkey animal
+🦍 gorilla animal
+🦧 orangutan animal
+🐶 dog face animal
+🐕 dog animal
+🦮 guide dog animal
+🐕‍🦺 service dog animal
+🐩 poodle animal
+🐺 wolf animal
+🦊 fox animal
+🦝 raccoon animal
+🐱 cat face animal
+🐈 cat animal
+🦁 lion animal
+🐯 tiger face animal
+🐅 tiger animal
+🐆 leopard animal
+🐴 horse face animal
+🐎 horse animal
+🦄 unicorn animal
+🦓 zebra animal
+🦌 deer animal
+🐮 cow face animal
+🐂 ox animal
+🐃 water buffalo animal
+🐄 cow animal
+🐷 pig face animal
+🐖 pig animal
+🐗 boar animal
+🐽 pig nose animal
+🐏 ram animal
+🐑 ewe animal
+🐐 goat animal
+🐪 camel animal
+🐫 two-hump camel animal
+🦙 llama animal
+🦒 giraffe animal
+🐘 elephant animal
+🦏 rhinoceros animal
+🦛 hippopotamus animal
+🐭 mouse face animal
+🐁 mouse animal
+🐀 rat animal
+🐹 hamster animal
+🐰 rabbit face animal
+🐇 rabbit animal
+🐿️ chipmunk animal
+🦔 hedgehog animal
+🦇 bat animal
+🐻 bear animal
+🐨 koala animal
+🐼 panda animal
+🦥 sloth animal
+🦦 otter animal
+🦨 skunk animal
+🦘 kangaroo animal
+🦡 badger animal
+🐾 paw prints animal
+🦃 turkey animal
+🐔 chicken animal
+🐓 rooster animal
+🐣 hatching chick animal
+🐤 baby chick animal
+🐥 front-facing baby chick animal
+🐦 bird animal
+🐧 penguin animal
+🕊️ dove animal
+🦅 eagle animal
+🦆 duck animal
+🦢 swan animal
+🦉 owl animal
+🦩 flamingo animal
+🦚 peacock animal
+🦜 parrot animal
+🐸 frog animal
+🐊 crocodile animal
+🐢 turtle animal
+🦎 lizard animal
+🐍 snake animal
+🐲 dragon face animal
+🐉 dragon animal
+🦕 sauropod animal
+🦖 T-Rex animal
+🐳 spouting whale animal
+🐋 whale animal
+🐬 dolphin animal
+🐟 fish animal
+🐠 tropical fish animal
+🐡 blowfish animal
+🦭 seal animal
+🦫 beaver animal
+🦈 shark animal
+🐙 octopus animal
+🐚 spiral shell animal
+🐌 snail animal
+🦋 butterfly animal
+🐛 bug animal
+🐜 ant animal
+🐝 honeybee animal
+🐞 lady beetle animal
+🦗 cricket animal
+🕷️ spider animal
+🕸️ spider web animal
+🦂 scorpion animal
+🦟 mosquito animal
+🦠 microbe animal
 💐 bouquet
 🌸 cherry blossom
 💮 white flower
@@ -2803,6 +2803,7 @@
 🎊 confetti ball
 🎋 tanabata tree
 🎍 pine decoration
+🎯 bullseye
 🎎 Japanese dolls
 🎏 carp streamer
 🎐 wind chime
@@ -3130,52 +3131,52 @@
 🔞 no one under eighteen
 ☢️ radioactive
 ☣️ biohazard
-⬆️ up arrow
-↗️ up-right arrow
-➡️ right arrow
-↘️ down-right arrow
-⬇️ down arrow
-↙️ down-left arrow
-⬅️ left arrow
-↖️ up-left arrow
-↕️ up-down arrow
-↔️ left-right arrow
-↩️ right arrow curving left
-↪️ left arrow curving right
-⤴️ right arrow curving up
-⤵️ right arrow curving down
-🔃 clockwise vertical arrows
-🔄 counterclockwise arrows button
-🔙 BACK arrow
-🔚 END arrow
-🔛 ON! arrow
-🔜 SOON arrow
-🔝 TOP arrow
+⬆️  direction up arrow
+↗️  direction up-right arrow
+➡️  direction right arrow
+↘️  direction down-right arrow
+⬇️  direction down arrow
+↙️  direction down-left arrow
+⬅️  direction left arrow
+↖️  direction up-left arrow
+↕️  direction up-down arrow
+↔️  direction left-right arrow
+↩️  direction right arrow curving left
+↪️  direction left arrow curving right
+⤴️ direction  right arrow curving up
+⤵️ direction  right arrow curving down
+🔃 direction  clockwise vertical arrows
+🔄 direction  counterclockwise arrows button
+🔙 direction  BACK arrow
+🔚 direction  END arrow
+🔛 direction  ON! arrow
+🔜 direction  SOON arrow
+🔝 direction  TOP arrow
 🛐 place of worship
-⚛️ atom symbol
-🕉️ om
-✡️ star of David
-☸️ wheel of dharma
-☯️ yin yang
-✝️ latin cross
-☦️ orthodox cross
-☪️ star and crescent
-☮️ peace symbol
+⚛️  atom symbol
+🕉️ religion  om
+✡️  religion star of David
+☸️  religion wheel of dharma
+☯️  religion yin yang
+✝️  religion latin cross
+☦️  religion orthodox cross
+☪️  religion star and crescent
+☮️  religion peace symbol
 🕎 menorah
 🔯 dotted six-pointed star
-♈ Aries
-♉ Taurus
-♊ Gemini
-♋ Cancer
-♌ Leo
-♍ Virgo
-♎ Libra
-♏ Scorpio
-♐ Sagittarius
-♑ Capricorn
-♒ Aquarius
-♓ Pisces
-⛎ Ophiuchus
+♈ Astrology Aries
+♉ Astrology Taurus
+♊ Astrology Gemini
+♋ Astrology Cancer
+♌ Astrology Leo
+♍ Astrology Virgo
+♎ Astrology Libra
+♏ Astrology Scorpio
+♐ Astrology Sagittarius
+♑ Astrology Capricorn
+♒ Astrology Aquarius
+♓ Astrology Pisces
+⛎ Astrology Ophiuchus
 🔀 shuffle tracks button
 🔁 repeat button
 🔂 repeat single button
@@ -3237,16 +3238,6 @@
 ™️ trade mark
 #️⃣ keycap: #
 *️⃣ keycap: *
-: 0
-: 1
-: 2
-: 3
-: 4
-: 5
-: 6
-: 7
-: 8
-: 9
 🔟 keycap: 10
 🔠 input latin uppercase
 🔡 input latin lowercase

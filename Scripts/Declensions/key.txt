@@ -1,0 +1,54 @@
+1ST DECLENSION (water)
+NOM   GEN   DAT   ACC   ABL
+aqua aquae aquae aquam aquā
+aquae aquārum aquīs aquās aquīs
+
+2ND DECLENSION (slave)
+NOM   GEN   DAT   ACC   ABL
+servus servī servō servum servō
+servī servōrum servīs servōs servīs
+
+2ND DECLENSION (gift)
+NOM   GEN   DAT   ACC   ABL
+dōnum dōnī dōnō dōnum dōnō
+dōna dōnōrum dōnīs dōna dōnīs
+
+3RD DECLENSION (king)
+NOM   GEN   DAT   ACC   ABL
+rēx rēgis rēgī rēgem rēge
+rēgēs rēgum rēgibus rēgēs rēgibus
+
+3RD DECLENSION (body)
+NOM   GEN   DAT   ACC   ABL
+corpus corporis corporī corpus corpore
+corpora corporum corporibus corpora corporibus
+
+3RD DECLENSION I-STEM (citizen)
+NOM   GEN   DAT   ACC   ABL
+cīvis cīvis cīvī cīvem cīve
+cīvēs cīvium cīvibus cīvēs cīvibus
+
+3RD DECLENSION I-STEM (sea)
+NOM   GEN   DAT   ACC   ABL
+mare maris marī mare marī
+maria marium maribus maria maribus
+
+4TH DECLENSION I-STEM (fruit)
+NOM   GEN   DAT   ACC   ABL
+frūctus frūctūs frūctuī frūctum frūctū
+frūctūs frūctuum frūctibus frūctūs frūctibus
+
+4TH DECLENSION I-STEM (horn)
+NOM   GEN   DAT   ACC   ABL
+cornū cornūs cornū cornū cornū
+cornua cornuum cornibus cornua cornibus
+
+5TH DECLENSION I-STEM (thing)
+NOM   GEN   DAT   ACC   ABL
+rēs reī reī rem rē
+rēs rērum rēbus rēs rēbus
+
+5TH DECLENSION I-STEM (day)
+NOM   GEN   DAT   ACC   ABL
+diēs diēī diēī diem diē
+diēs diērum diēbus diēs diēbus

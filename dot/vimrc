@@ -76,3 +76,11 @@ nnoremap <silent> <leader>ts :<C-u>set invspell spelllang=en_us<CR>
 map <silent> <leader>dd :<C-u>Explore<CR>
 
 nnoremap <silent> <leader>x :%d<CR>
+
+if &diff
+  highlight Normal ctermbg=17 guibg=#00005f ctermfg=231 guifg=#ffffff
+  highlight DiffAdd    cterm=NONE ctermfg=231 ctermbg=39  gui=NONE guifg=#ffffff guibg=#00afff
+  highlight DiffChange cterm=NONE ctermfg=231 ctermbg=27  gui=NONE guifg=#ffffff guibg=#005fff
+  highlight DiffText   cterm=bold,underline ctermfg=231 ctermbg=45 gui=bold,underline guifg=#ffffff guibg=#00d7ff
+  highlight DiffDelete cterm=bold ctermfg=231 ctermbg=93  gui=bold guifg=#ffffff guibg=#8700ff
+endif

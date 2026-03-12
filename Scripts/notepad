@@ -3,4 +3,4 @@
 alacritty \
   --title "Libellus" \
   --config-file "$HOME/.config/alacritty/notepad.toml" \
-  -e vim
+  -e vim -c "set shortmess+=I"

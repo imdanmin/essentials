@@ -70,7 +70,7 @@
             }
         ],
         "target_uinput": "keyboard",
-        "output_symbol": "KEY_1",
+        "output_symbol": "KEY_4",
         "mapping_type": "key_macro"
     },
     {
