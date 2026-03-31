@@ -219,7 +219,7 @@ alias cls='echo "" > "$HOME/.local/share/fish/fish_history"'
 abbr -a 'pdfsplit' 'qpdf --empty --pages A.pdf 1-, -- B.pdf'
 
 # abbr -a 'upd' 'sudo pacman -Syyu && yay -Syyu && doom upgrade && flatpak update'
-abbr -a 'upd' 'sudo pacman -Syyu && doom upgrade && flatpak update'
+abbr -a 'upd' 'sudo pacman -Syyu && flatpak update'
 
 abbr -a 'ytdlp' 'yt-dlp \
     -f "bestvideo[height<=480][vcodec^=avc1]+bestaudio[acodec^=mp4a]/best[height<=480]" \
@@ -250,7 +250,6 @@ function y
 	end
 	rm -f -- "$tmp" > /dev/null
 end
-
 
 # zoxide
 zoxide init --cmd cd fish | source

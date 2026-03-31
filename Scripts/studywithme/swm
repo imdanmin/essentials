@@ -1,0 +1,24 @@
+#!/bin/bash
+
+HARU="/home/pomie/studywithme/haeru.mp4"
+EUK="/home/pomie/studywithme/eukalyptus.mp4"
+PERST="/home/pomie/studywithme/perstudium.mp4"
+KHARM="/home/pomie/studywithme/kharma.mp4"
+
+THUND="/home/pomie/studywithme/thunder.mp3"
+
+trap 'kill 0' EXIT
+
+read W H <<<$(xrandr | awk '/\*/ {print $1}' | head -n1 | tr 'x' ' ')
+
+w=$((W/2))
+h=$((H/2))
+
+mpv --start=00:00:05 --no-audio --loop=inf $HARU --geometry=${w}x${h}+1+0 &
+mpv --start=00:00:02 --no-audio --loop=inf $EUK --geometry=${w}x${h}+${w}+0 &
+mpv --start=00:00:04 --no-audio --loop=inf $PERST --geometry=${w}x${h}+0+${h} &
+mpv --start=00:00:48 --no-audio --loop=inf $KHARM --geometry=${w}x${h}+${w}+${h} &
+
+mpv --loop=inf --no-video --idle=no --no-sub --audio-display=no $THUND
+
+wait
