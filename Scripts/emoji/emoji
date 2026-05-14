@@ -1,6 +1,6 @@
 #!/bin/bash
 
-file="$HOME/Documents/git/essentials/Scripts/emoji/emoji-data-qualified.txt"
+file="$HOME/Documents/git/essentials/Scripts/emoji/emoji.txt"
 
 if [[ ! -f "$file" ]]; then
   echo "Error: File '$file' not found." >&2

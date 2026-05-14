@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dual Web Viewer</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.6.5/split.min.js"></script>
+  <style>
+    body, html { margin:0; padding:0; height:100%; overflow:hidden; font-family:Arial, sans-serif; background:#111; color:#eee; }
+
+    .controls {
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.85);
+      padding: 8px 16px;
+      border-radius: 8px;
+      z-index: 1000;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
+    input[type="text"] { width: 260px; padding: 6px 10px; border: none; border-radius: 4px; }
+    button { padding: 6px 12px; background: #0066ff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+    button:hover { background: #3388ff; }
+
+    .split { display: flex; height: 100vh; }
+    .pane { position: relative; }
+    iframe { width: 100%; height: 100%; border: none; }
+
+    .full {
+      display: none;
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: 2000;
+    }
+    .full-controls {
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.9);
+      padding: 10px 20px;
+      border-radius: 8px;
+      z-index: 3000;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .label {
+      position: absolute;
+      top: 70px;
+      left: 12px;
+      background: rgba(0,0,0,0.75);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 14px;
+      z-index: 100;
+    }
+    .help {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      background: rgba(0,0,0,0.7);
+      color: #aaa;
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-size: 13px;
+      z-index: 100;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Top controls (always visible) -->
+<div class="controls" id="controls">
+  <input type="text" id="url1" value="https://en.wikipedia.org">
+  <button onclick="loadLeft()">Load Left</button>
+
+  <input type="text" id="url2" value="https://archive.org">
+  <button onclick="loadRight()">Load Right</button>
+
+  <button onclick="goToSplitMode()" style="margin-left:10px;">Split View</button>
+  <button onclick="goToFullMode()" style="margin-left:5px;">Fullscreen</button>
+</div>
+
+<!-- Split Mode -->
+<div class="split" id="split-container">
+  <div class="pane" id="pane1">
+    <div class="label">Left</div>
+    <iframe id="frame1" src="https://en.wikipedia.org"></iframe>
+  </div>
+  <div class="pane" id="pane2">
+    <div class="label">Right</div>
+    <iframe id="frame2" src="https://archive.org"></iframe>
+  </div>
+</div>
+
+<!-- Fullscreen 1 -->
+<div class="full" id="full1">
+  <div class="full-controls">
+    <button onclick="switchToOther()">← Switch to Right</button>
+    <button onclick="goToSplitMode()">Back to Split View</button>
+    <button onclick="switchToOther()">Switch to Right →</button>
+  </div>
+  <div class="label">LEFT — Click top bar if keys stop working</div>
+  <iframe id="fullframe1" src="https://en.wikipedia.org"></iframe>
+</div>
+
+<!-- Fullscreen 2 -->
+<div class="full" id="full2">
+  <div class="full-controls">
+    <button onclick="switchToOther()">← Switch to Left</button>
+    <button onclick="goToSplitMode()">Back to Split View</button>
+    <button onclick="switchToOther()">Switch to Left →</button>
+  </div>
+  <div class="label">RIGHT — Click top bar if keys stop working</div>
+  <iframe id="fullframe2" src="https://archive.org"></iframe>
+</div>
+
+<div class="help">
+  Ctrl+↑ Fullscreen • Ctrl+↓ Split • Ctrl+← / Ctrl+→ Switch • Click top bar to restore keys
+</div>
+
+<script>
+  let splitInstance = Split(['#pane1', '#pane2'], {
+    sizes: [50, 50],
+    minSize: 200,
+    gutterSize: 6,
+    cursor: 'col-resize'
+  });
+
+  let isSplitMode = true;
+  let currentFull = 1;
+
+  const splitContainer = document.getElementById('split-container');
+  const full1 = document.getElementById('full1');
+  const full2 = document.getElementById('full2');
+
+  function loadLeft() {
+    const url = document.getElementById('url1').value.trim();
+    if (url) {
+      const fullUrl = url.startsWith('http') ? url : 'https://' + url;
+      document.getElementById('frame1').src = fullUrl;
+      document.getElementById('fullframe1').src = fullUrl;
+    }
+  }
+
+  function loadRight() {
+    const url = document.getElementById('url2').value.trim();
+    if (url) {
+      const fullUrl = url.startsWith('http') ? url : 'https://' + url;
+      document.getElementById('frame2').src = fullUrl;
+      document.getElementById('fullframe2').src = fullUrl;
+    }
+  }
+
+  function showFull(n) {
+    full1.style.display = n === 1 ? 'block' : 'none';
+    full2.style.display = n === 2 ? 'block' : 'none';
+    currentFull = n;
+    isSplitMode = false;
+  }
+
+  function goToSplitMode() {
+    splitContainer.style.display = 'flex';
+    full1.style.display = 'none';
+    full2.style.display = 'none';
+    isSplitMode = true;
+  }
+
+  function goToFullMode() {
+    if (isSplitMode) {
+      showFull(currentFull);
+    }
+  }
+
+  function switchToOther() {
+    if (currentFull === 1) showFull(2);
+    else showFull(1);
+  }
+
+  // Keyboard shortcuts
+  document.addEventListener('keydown', e => {
+    if (!e.ctrlKey) return;
+
+    switch (e.key) {
+      case 'ArrowUp':
+        e.preventDefault();
+        if (isSplitMode) goToFullMode();
+        break;
+
+      case 'ArrowDown':
+        e.preventDefault();
+        goToSplitMode();
+        break;
+
+      case 'ArrowLeft':
+        e.preventDefault();
+        if (!isSplitMode) showFull(1);
+        break;
+
+      case 'ArrowRight':
+        e.preventDefault();
+        if (!isSplitMode) showFull(2);
+        break;
+    }
+  }, true);
+
+  // Click top bar to regain focus
+  document.getElementById('controls').addEventListener('click', () => window.focus());
+
+  // Enter key support
+  document.getElementById('url1').addEventListener('keypress', e => { if (e.key === 'Enter') loadLeft(); });
+  document.getElementById('url2').addEventListener('keypress', e => { if (e.key === 'Enter') loadRight(); });
+</script>
+</body>
+</html>

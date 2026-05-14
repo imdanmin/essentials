@@ -77,6 +77,10 @@ map <silent> <leader>dd :<C-u>Explore<CR>
 
 nnoremap <silent> <leader>x :%d<CR>
 
+nnoremap <leader>r :execute rand() % line('$') + 1<CR>
+vnoremap <leader>y "+y
+nnoremap <leader>y V"+y
+
 if &diff
   highlight Normal ctermbg=17 guibg=#00005f ctermfg=231 guifg=#ffffff
   highlight DiffAdd    cterm=NONE ctermfg=231 ctermbg=39  gui=NONE guifg=#ffffff guibg=#00afff

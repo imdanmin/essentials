@@ -31,8 +31,7 @@ alias necessary-verbs="sudo ~/.local/bin/necessary-verbs"
 
 # gocryptfs
 set CLCLM "/tmp/clanculum"
-# alias incog="mkdir -p $CLCLM > /dev/null && gocryptfs ~/.local/vault $CLCLM && cd $CLCLM"
-alias incog="mkdir -p $CLCLM > /dev/null && gocryptfs "$HOME/Documents/International/JP/eloq" $CLCLM && cd $CLCLM"
+alias incog="mkdir -p $CLCLM > /dev/null && gocryptfs "$HOME/.local/priv/eloq" $CLCLM && cd $CLCLM"
 alias outcog="fusermount -u $CLCLM"
 
 # Display last pacman update time
@@ -219,7 +218,7 @@ alias cls='echo "" > "$HOME/.local/share/fish/fish_history"'
 abbr -a 'pdfsplit' 'qpdf --empty --pages A.pdf 1-, -- B.pdf'
 
 # abbr -a 'upd' 'sudo pacman -Syyu && yay -Syyu && doom upgrade && flatpak update'
-abbr -a 'upd' 'sudo pacman -Syyu && flatpak update'
+abbr -a 'upd' 'sudo cachyos-rate-mirrors && sudo pacman -Syyu && flatpak update'
 
 abbr -a 'ytdlp' 'yt-dlp \
     -f "bestvideo[height<=480][vcodec^=avc1]+bestaudio[acodec^=mp4a]/best[height<=480]" \
